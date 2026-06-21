@@ -1,26 +1,78 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAll = exports.create = void 0;
-const express_1 = require("express");
+exports.deleteDepartment = exports.updateDepartment = exports.getDepartmentById = exports.getDepartments = exports.createDepartment = void 0;
 const Department_1 = require("../models/Department");
-const create = async (req, res) => {
+// Create Department
+const createDepartment = async (req, res) => {
     try {
-        const doc = await Department_1.Department.create(req.body);
-        res.status(201).json(doc);
+        const { name, code, headOfDepartment, description } = req.body;
+        const existing = await Department_1.Department.findOne({ code });
+        if (existing) {
+            res.status(400).json({ message: 'Department code already exists' });
+            return;
+        }
+        const dept = await Department_1.Department.create({ name, code, headOfDepartment, description });
+        res.status(201).json(dept);
     }
     catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ message: 'Server Error', error });
     }
 };
-exports.create = create;
-const getAll = async (req, res) => {
+exports.createDepartment = createDepartment;
+// Get All Departments
+const getDepartments = async (req, res) => {
     try {
-        const data = await Department_1.Department.find();
-        res.status(200).json(data);
+        const departments = await Department_1.Department.find().populate('headOfDepartment', 'firstName lastName email');
+        res.status(200).json(departments);
     }
     catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ message: 'Server Error', error });
     }
 };
-exports.getAll = getAll;
+exports.getDepartments = getDepartments;
+// Get Department by ID
+const getDepartmentById = async (req, res) => {
+    try {
+        const dept = await Department_1.Department.findById(req.params.id).populate('headOfDepartment', 'firstName lastName email');
+        if (!dept) {
+            res.status(404).json({ message: 'Department not found' });
+            return;
+        }
+        res.status(200).json(dept);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
+};
+exports.getDepartmentById = getDepartmentById;
+// Update Department
+const updateDepartment = async (req, res) => {
+    try {
+        const dept = await Department_1.Department.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!dept) {
+            res.status(404).json({ message: 'Department not found' });
+            return;
+        }
+        res.status(200).json(dept);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
+};
+exports.updateDepartment = updateDepartment;
+// Delete Department
+const deleteDepartment = async (req, res) => {
+    try {
+        const dept = await Department_1.Department.findByIdAndDelete(req.params.id);
+        if (!dept) {
+            res.status(404).json({ message: 'Department not found' });
+            return;
+        }
+        res.status(200).json({ message: 'Department deleted successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
+};
+exports.deleteDepartment = deleteDepartment;
 //# sourceMappingURL=department.controller.js.map
