@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import { Server } from 'socket.io';
 import { connectDB } from './config/db';
 import { setSocketServer } from './services/socket.service';
+import { errorHandler, notFoundHandler } from './middlewares/error.middleware';
 
 dotenv.config();
 
@@ -100,8 +101,11 @@ io.on('connection', (socket) => {
 });
 
 app.use((req: Request, res: Response) => {
-  res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
+  notFoundHandler(req, res);
 });
+
+// Global error handler middleware (must be last)
+app.use(errorHandler);
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
