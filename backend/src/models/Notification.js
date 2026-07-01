@@ -36,8 +36,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notification = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+    recipient: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+    audienceRoles: [{ type: String }],
+    title: { type: String, required: true },
+    message: { type: String, required: true },
+    type: { type: String, enum: ['info', 'success', 'warning', 'error'], default: 'info' },
+    readAt: { type: Date },
+    channel: { type: String, enum: ['in-app', 'email', 'both'], default: 'in-app' }
 }, { timestamps: true });
 exports.Notification = mongoose_1.default.model('Notification', schema);
 //# sourceMappingURL=Notification.js.map

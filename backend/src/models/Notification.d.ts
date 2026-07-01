@@ -1,19 +1,34 @@
 import mongoose from 'mongoose';
 export declare const Notification: mongoose.Model<{
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -23,18 +38,33 @@ export declare const Notification: mongoose.Model<{
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
     timestamps: true;
 }, {
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -42,8 +72,13 @@ export declare const Notification: mongoose.Model<{
 }, "id"> & {
     id: string;
 }, unknown, {
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
@@ -51,8 +86,13 @@ export declare const Notification: mongoose.Model<{
 } & {
     __v: number;
 }>, {
-    name: string;
-    details?: any;
+    message: string;
+    type: "error" | "success" | "info" | "warning";
+    title: string;
+    audienceRoles: string[];
+    channel: "email" | "in-app" | "both";
+    recipient?: mongoose.Types.ObjectId | null | undefined;
+    readAt?: NativeDate | null | undefined;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
