@@ -76,7 +76,7 @@ export const deleteExam = async (req: Request, res: Response): Promise<void> => 
     const examId = req.params.id as string;
     
     // Delete all grades related to this exam
-    await Grade.deleteMany({ assessmentId: examId, assessmentType: 'EXAM' });
+    await Grade.deleteMany({ assessmentId: examId, assessmentType: 'Exam' });
     
     // Delete the exam
     const exam = await Exam.findByIdAndDelete(examId);

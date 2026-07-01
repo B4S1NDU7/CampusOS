@@ -82,3 +82,37 @@ export const createPaymentIntent = async (req: Request, res: Response): Promise<
     res.status(500).json({ message: 'Failed to create payment intent', error });
   }
 };
+
+export const stripeWebhook = async (req: Request, res: Response): Promise<void> => {
+  const sig = req.headers['stripe-signature'];
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!process.env.STRIPE_SECRET_KEY || !endpointSecret) {
+    res.status(503).json({ message: 'Stripe is not configured' });
+    return;
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig as string, endpointSecret);
+  } catch (err: any) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object as any;
+    const invoiceId = paymentIntent.metadata?.invoiceId;
+
+    if (invoiceId) {
+      await Finance.findByIdAndUpdate(invoiceId, {
+        status: 'paid',
+        paidAt: new Date()
+      });
+    }
+  }
+
+  res.json({ received: true });
+};
