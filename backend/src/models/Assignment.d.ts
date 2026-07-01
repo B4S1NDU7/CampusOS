@@ -1,63 +1,19 @@
-import mongoose from 'mongoose';
-export declare const Assignment: mongoose.Model<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {}, {}, {
-    id: string;
-}, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
+import mongoose, { Document } from 'mongoose';
+export interface IAssignment extends Document {
+    title: string;
+    description: string;
+    course: mongoose.Types.ObjectId;
+    dueDate: Date;
+    maxScore: number;
+    createdBy: mongoose.Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export declare const Assignment: mongoose.Model<IAssignment, {}, {}, {}, mongoose.Document<unknown, {}, IAssignment, {}, mongoose.DefaultSchemaOptions> & IAssignment & Required<{
     _id: mongoose.Types.ObjectId;
-} & {
+}> & {
     __v: number;
-}, "id"> & {
+} & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
-}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}, "id"> & {
-    id: string;
-}, unknown, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>;
+}, any, IAssignment>;
 //# sourceMappingURL=Assignment.d.ts.map

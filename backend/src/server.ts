@@ -24,6 +24,14 @@ app.use(rateLimit({
   limit: Number(process.env.RATE_LIMIT_MAX || 300)
 }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
+// Stripe Webhook MUST be before express.json()
+app.post('/api/finance/webhook', express.raw({ type: 'application/json' }), (req: Request, res: Response, next) => {
+  // Use dynamic require to prevent circular dependency issues at startup
+  const { stripeWebhook } = require('./controllers/finance.controller');
+  stripeWebhook(req, res).catch(next);
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
