@@ -1,9 +1,12 @@
 import mongoose, { Document } from 'mongoose';
 export declare enum Role {
+    SUPER_ADMIN = "Super Admin",
+    UNIVERSITY_ADMIN = "University Admin",
+    DEPARTMENT_ADMIN = "Department Admin",
     STUDENT = "Student",
     LECTURER = "Lecturer",
-    ADMIN = "Admin",
-    PARENT = "Parent"
+    PARENT = "Parent",
+    ADMIN = "Admin"
 }
 export interface IUser extends Document {
     firstName: string;

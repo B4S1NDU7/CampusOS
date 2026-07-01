@@ -37,10 +37,13 @@ exports.User = exports.Role = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 var Role;
 (function (Role) {
+    Role["SUPER_ADMIN"] = "Super Admin";
+    Role["UNIVERSITY_ADMIN"] = "University Admin";
+    Role["DEPARTMENT_ADMIN"] = "Department Admin";
     Role["STUDENT"] = "Student";
     Role["LECTURER"] = "Lecturer";
-    Role["ADMIN"] = "Admin";
     Role["PARENT"] = "Parent";
+    Role["ADMIN"] = "Admin";
 })(Role || (exports.Role = Role = {}));
 const userSchema = new mongoose_1.Schema({
     firstName: { type: String, required: true },
