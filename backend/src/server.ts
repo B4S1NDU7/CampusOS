@@ -15,10 +15,28 @@ dotenv.config();
 
 const app: Express = express();
 const clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+const allowedOrigins = [
+  clientOrigin,
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:5174'
+].filter(Boolean) as string[];
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(null, false);
+  },
+  credentials: true
+};
 
 // Middlewares
 app.use(helmet());
-app.use(cors({ origin: clientOrigin, credentials: true }));
+app.use(cors(corsOptions));
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: Number(process.env.RATE_LIMIT_MAX || 300)
@@ -90,10 +108,7 @@ app.get('/', (req: Request, res: Response) => {
 const PORT = process.env.PORT || 5000;
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
-  cors: {
-    origin: clientOrigin,
-    credentials: true
-  }
+  cors: corsOptions
 });
 
 setSocketServer(io);
