@@ -36,8 +36,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Finance = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+    student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+    invoiceNumber: { type: String, required: true, unique: true },
+    description: { type: String, required: true },
+    amount: { type: Number, required: true },
+    currency: { type: String, default: 'usd' },
+    dueDate: { type: Date },
+    status: { type: String, enum: ['draft', 'issued', 'paid', 'overdue', 'void'], default: 'issued' },
+    stripePaymentIntentId: { type: String },
+    scholarship: {
+        name: { type: String },
+        amount: { type: Number, default: 0 }
+    },
+    paidAt: { type: Date }
 }, { timestamps: true });
 exports.Finance = mongoose_1.default.model('Finance', schema);
 //# sourceMappingURL=Finance.js.map

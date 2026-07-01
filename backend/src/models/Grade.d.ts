@@ -1,63 +1,18 @@
-import mongoose from 'mongoose';
-export declare const Grade: mongoose.Model<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {}, {}, {
-    id: string;
-}, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
+import mongoose, { Document } from 'mongoose';
+export interface IGrade extends Document {
+    student: mongoose.Types.ObjectId;
+    course: mongoose.Types.ObjectId;
+    assessmentId: mongoose.Types.ObjectId;
+    assessmentType: 'Exam' | 'Assignment';
+    score: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export declare const Grade: mongoose.Model<IGrade, {}, {}, {}, mongoose.Document<unknown, {}, IGrade, {}, mongoose.DefaultSchemaOptions> & IGrade & Required<{
     _id: mongoose.Types.ObjectId;
-} & {
+}> & {
     __v: number;
-}, "id"> & {
+} & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
-}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}, "id"> & {
-    id: string;
-}, unknown, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>;
+}, any, IGrade>;
 //# sourceMappingURL=Grade.d.ts.map

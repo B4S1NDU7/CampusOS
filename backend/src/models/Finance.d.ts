@@ -1,19 +1,52 @@
 import mongoose from 'mongoose';
 export declare const Finance: mongoose.Model<{
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -23,18 +56,51 @@ export declare const Finance: mongoose.Model<{
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
     timestamps: true;
 }, {
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -42,8 +108,19 @@ export declare const Finance: mongoose.Model<{
 }, "id"> & {
     id: string;
 }, unknown, {
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
@@ -51,8 +128,19 @@ export declare const Finance: mongoose.Model<{
 } & {
     __v: number;
 }>, {
-    name: string;
-    details?: any;
+    description: string;
+    status: "void" | "draft" | "issued" | "paid" | "overdue";
+    invoiceNumber: string;
+    amount: number;
+    currency: string;
+    dueDate?: NativeDate | null | undefined;
+    student?: mongoose.Types.ObjectId | null | undefined;
+    stripePaymentIntentId?: string | null | undefined;
+    scholarship?: {
+        amount: number;
+        name?: string | null | undefined;
+    } | null | undefined;
+    paidAt?: NativeDate | null | undefined;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {

@@ -35,9 +35,14 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Grade = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+const gradeSchema = new mongoose_1.Schema({
+    student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
+    course: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Course', required: true },
+    assessmentId: { type: mongoose_1.Schema.Types.ObjectId, required: true },
+    assessmentType: { type: String, enum: ['Exam', 'Assignment'], required: true },
+    score: { type: Number, required: true }
 }, { timestamps: true });
-exports.Grade = mongoose_1.default.model('Grade', schema);
+// Prevent duplicate grades for the same assessment for a student
+gradeSchema.index({ student: 1, assessmentId: 1, assessmentType: 1 }, { unique: true });
+exports.Grade = mongoose_1.default.model('Grade', gradeSchema);
 //# sourceMappingURL=Grade.js.map
