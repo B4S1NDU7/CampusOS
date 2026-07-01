@@ -36,8 +36,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibraryBook = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+    title: { type: String, required: true },
+    isbn: { type: String, unique: true, sparse: true },
+    author: { type: String, required: true },
+    category: { type: String },
+    copiesTotal: { type: Number, default: 1 },
+    copiesAvailable: { type: Number, default: 1 },
+    borrowedBy: [{
+            user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+            borrowedAt: { type: Date, default: Date.now },
+            dueAt: { type: Date },
+            returnedAt: { type: Date },
+            fine: { type: Number, default: 0 }
+        }]
 }, { timestamps: true });
 exports.LibraryBook = mongoose_1.default.model('LibraryBook', schema);
 //# sourceMappingURL=LibraryBook.js.map

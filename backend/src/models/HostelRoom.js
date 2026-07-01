@@ -36,8 +36,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HostelRoom = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+    roomNumber: { type: String, required: true, unique: true },
+    block: { type: String, required: true },
+    floor: { type: Number, default: 1 },
+    capacity: { type: Number, required: true },
+    occupants: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'User' }],
+    monthlyFee: { type: Number, default: 0 },
+    status: { type: String, enum: ['available', 'full', 'maintenance'], default: 'available' },
+    requests: [{
+            student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+            status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+            note: { type: String },
+            requestedAt: { type: Date, default: Date.now }
+        }]
 }, { timestamps: true });
 exports.HostelRoom = mongoose_1.default.model('HostelRoom', schema);
 //# sourceMappingURL=HostelRoom.js.map

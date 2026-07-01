@@ -1,19 +1,82 @@
 import mongoose from 'mongoose';
 export declare const HostelRoom: mongoose.Model<{
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -23,18 +86,81 @@ export declare const HostelRoom: mongoose.Model<{
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
     timestamps: true;
 }, {
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps, {
     id: string;
 }, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
     timestamps: true;
 }> & Omit<{
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -42,8 +168,29 @@ export declare const HostelRoom: mongoose.Model<{
 }, "id"> & {
     id: string;
 }, unknown, {
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
@@ -51,8 +198,29 @@ export declare const HostelRoom: mongoose.Model<{
 } & {
     __v: number;
 }>, {
-    name: string;
-    details?: any;
+    capacity: number;
+    status: "available" | "full" | "maintenance";
+    roomNumber: string;
+    block: string;
+    floor: number;
+    occupants: mongoose.Types.ObjectId[];
+    monthlyFee: number;
+    requests: mongoose.Types.DocumentArray<{
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.ObjectId, unknown, {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }, {}, {}> & {
+        status: "pending" | "approved" | "rejected";
+        requestedAt: NativeDate;
+        student?: mongoose.Types.ObjectId | null | undefined;
+        note?: string | null | undefined;
+    }>;
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
