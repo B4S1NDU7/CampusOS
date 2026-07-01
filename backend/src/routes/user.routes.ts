@@ -1,11 +1,14 @@
 import { Router } from 'express';
-import { getUsers, getUserById, updateUserProfile, createUser, updateUser, deleteUser } from '../controllers/user.controller';
+import { getUsers, getUserById, getCurrentUser, updateUserProfile, createUser, updateUser, deleteUser } from '../controllers/user.controller';
 import { protect, authorize } from '../middlewares/auth.middleware';
 import { Role } from '../models/User';
 
 const router = Router();
 
 // Profile routes (Any authenticated user)
+router.route('/me')
+  .get(protect, getCurrentUser);
+
 router.route('/profile')
   .put(protect, updateUserProfile);
 

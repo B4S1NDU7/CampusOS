@@ -16,6 +16,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   role: Role;
+  studentId?: string;
   isVerified: boolean;
   googleId?: string;
   profileImage?: string;
@@ -33,6 +34,7 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String }, // Optional for Google OAuth users
     role: { type: String, enum: Object.values(Role), default: Role.STUDENT },
+    studentId: { type: String, unique: true, sparse: true },
     isVerified: { type: Boolean, default: false },
     googleId: { type: String },
     profileImage: { type: String },

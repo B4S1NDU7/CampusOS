@@ -23,6 +23,33 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// Get current authenticated user profile
+export const getCurrentUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = (req as any).user._id;
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).json({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      studentId: user.studentId,
+      phone: user.phone,
+      isVerified: user.isVerified,
+      profileImage: user.profileImage
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error });
+  }
+};
+
 // Get single user by ID
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {

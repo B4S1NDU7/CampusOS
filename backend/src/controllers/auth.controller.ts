@@ -24,6 +24,34 @@ const generateToken = (): string => {
   return crypto.randomBytes(32).toString('hex');
 };
 
+const generateStudentId = async (): Promise<string> => {
+  const prefix = 'STU';
+  const randomPart = crypto.randomBytes(3).toString('hex').toUpperCase();
+  const candidate = `${prefix}${randomPart}`;
+
+  const existing = await User.findOne({ studentId: candidate });
+  if (existing) {
+    return generateStudentId();
+  }
+
+  return candidate;
+};
+
+const ensureStudentId = async (user: any): Promise<string | undefined> => {
+  if (user.role !== Role.STUDENT) {
+    return undefined;
+  }
+
+  if (user.studentId) {
+    return user.studentId;
+  }
+
+  const studentId = await generateStudentId();
+  user.studentId = studentId;
+  await user.save();
+  return studentId;
+};
+
 const hashToken = (token: string): string => {
   return crypto.createHash('sha256').update(token).digest('hex');
 };
@@ -40,6 +68,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+    const studentId = role === Role.STUDENT ? await generateStudentId() : undefined;
 
     // Generate email verification token
     const verificationToken = generateToken();
@@ -52,6 +81,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       email,
       password: hashedPassword,
       role: role || Role.STUDENT,
+      studentId,
       emailVerificationToken: hashedVerificationToken,
       emailVerificationExpires: verificationExpires
     });
@@ -66,7 +96,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
     res.status(201).json({
       message: 'Registration successful. Please verify your email.',
-      user: { id: user._id, email: user.email, role: user.role }
+      user: { id: user._id, email: user.email, role: user.role, studentId: user.studentId }
     });
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error });
@@ -133,6 +163,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const studentId = await ensureStudentId(user);
     const { accessToken, refreshToken } = generateTokens(user._id.toString(), user.role);
 
     // Set refresh token in HTTP-only cookie
@@ -149,6 +180,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         id: user._id, 
         email: user.email, 
         role: user.role, 
+        studentId,
         firstName: user.firstName,
         lastName: user.lastName,
         isVerified: user.isVerified
@@ -192,6 +224,7 @@ export const refreshToken = async (req: Request, res: Response): Promise<void> =
         return;
       }
 
+      await ensureStudentId(user);
       const { accessToken } = generateTokens(user._id.toString(), user.role);
 
       res.status(200).json({ accessToken });

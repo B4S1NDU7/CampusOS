@@ -8,6 +8,7 @@ interface User {
   firstName: string;
   lastName?: string;
   phone?: string;
+  studentId?: string;
 }
 
 interface AuthContextType {
@@ -24,10 +25,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
   useEffect(() => {
-    if (token) {
+    const loadUser = async () => {
+      if (!token) return;
+
       const storedUser = localStorage.getItem('user');
-      if (storedUser) setUser(JSON.parse(storedUser));
-    }
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+
+      try {
+        const response = await api.get('/users/me');
+        const freshUser = response.data;
+        setUser(freshUser);
+        localStorage.setItem('user', JSON.stringify(freshUser));
+      } catch (error) {
+        console.error('Failed to refresh user profile', error);
+      }
+    };
+
+    loadUser();
   }, [token]);
 
   const login = (newToken: string, newUser: User) => {

@@ -220,6 +220,13 @@ export const Settings = () => {
               />
             </div>
 
+            {user?.studentId && (
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <p className="text-sm font-medium text-blue-700">Student ID</p>
+                <p className="text-lg font-semibold text-blue-900">{user.studentId}</p>
+              </div>
+            )}
+
             <Button
               type="submit"
               disabled={isLoading}
