@@ -36,8 +36,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuditLog = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+    actor: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+    action: { type: String, required: true, enum: ['create', 'read', 'update', 'delete', 'login', 'logout', 'ai', 'payment'] },
+    entity: { type: String, required: true },
+    entityId: { type: mongoose_1.Schema.Types.ObjectId },
+    before: { type: mongoose_1.Schema.Types.Mixed },
+    after: { type: mongoose_1.Schema.Types.Mixed },
+    ip: { type: String },
+    userAgent: { type: String }
 }, { timestamps: true });
 exports.AuditLog = mongoose_1.default.model('AuditLog', schema);
 //# sourceMappingURL=AuditLog.js.map
