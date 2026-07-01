@@ -1,63 +1,17 @@
-import mongoose from 'mongoose';
-export declare const Department: mongoose.Model<{
+import mongoose, { Document } from 'mongoose';
+export interface IDepartment extends Document {
     name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {}, {}, {
-    id: string;
-}, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
+    code: string;
+    headOfDepartment?: mongoose.Types.ObjectId;
+    description?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export declare const Department: mongoose.Model<IDepartment, {}, {}, {}, mongoose.Document<unknown, {}, IDepartment, {}, mongoose.DefaultSchemaOptions> & IDepartment & Required<{
     _id: mongoose.Types.ObjectId;
-} & {
+}> & {
     __v: number;
-}, "id"> & {
+} & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
-}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
-    timestamps: true;
-}> & Omit<{
-    name: string;
-    details?: any;
-} & mongoose.DefaultTimestampProps & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}, "id"> & {
-    id: string;
-}, unknown, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>, {
-    name: string;
-    details?: any;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>;
+}, any, IDepartment>;
 //# sourceMappingURL=Department.d.ts.map

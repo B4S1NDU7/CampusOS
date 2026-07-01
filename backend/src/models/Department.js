@@ -35,9 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Department = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const schema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    details: { type: mongoose_1.Schema.Types.Mixed }
+const departmentSchema = new mongoose_1.Schema({
+    name: { type: String, required: true, unique: true },
+    code: { type: String, required: true, unique: true },
+    headOfDepartment: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+    description: { type: String }
 }, { timestamps: true });
-exports.Department = mongoose_1.default.model('Department', schema);
+exports.Department = mongoose_1.default.model('Department', departmentSchema);
 //# sourceMappingURL=Department.js.map
