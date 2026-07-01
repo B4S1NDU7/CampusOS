@@ -35,6 +35,14 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Course = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const courseSchema = new mongoose_1.Schema({ title: { type: String, required: true }, code: { type: String, required: true, unique: true }, credits: { type: Number, required: true }, capacity: { type: Number, required: true }, lecturer: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' } }, { timestamps: true });
+const courseSchema = new mongoose_1.Schema({
+    name: { type: String, required: true },
+    code: { type: String, required: true, unique: true },
+    credits: { type: Number, required: true, min: 1, max: 10 },
+    department: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Department', required: true },
+    lecturers: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'User' }],
+    prerequisites: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Course' }],
+    capacity: { type: Number, default: 50 }
+}, { timestamps: true });
 exports.Course = mongoose_1.default.model('Course', courseSchema);
 //# sourceMappingURL=Course.js.map

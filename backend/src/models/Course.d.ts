@@ -1,87 +1,20 @@
-import mongoose from 'mongoose';
-export declare const Course: mongoose.Model<{
-    title: string;
+import mongoose, { Document } from 'mongoose';
+export interface ICourse extends Document {
+    name: string;
     code: string;
     credits: number;
+    department: mongoose.Types.ObjectId;
+    lecturers: mongoose.Types.ObjectId[];
+    prerequisites: mongoose.Types.ObjectId[];
     capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps, {}, {}, {
-    id: string;
-}, mongoose.Document<unknown, {}, {
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, {
-    timestamps: true;
-}> & Omit<{
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps & {
+    createdAt: Date;
+    updatedAt: Date;
+}
+export declare const Course: mongoose.Model<ICourse, {}, {}, {}, mongoose.Document<unknown, {}, ICourse, {}, mongoose.DefaultSchemaOptions> & ICourse & Required<{
     _id: mongoose.Types.ObjectId;
-} & {
+}> & {
     __v: number;
-}, "id"> & {
+} & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
-}, {
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
-}, Omit<mongoose.DefaultSchemaOptions, "timestamps"> & {
-    timestamps: true;
-}> & Omit<{
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-} & mongoose.DefaultTimestampProps & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}, "id"> & {
-    id: string;
-}, unknown, {
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>, {
-    title: string;
-    code: string;
-    credits: number;
-    capacity: number;
-    lecturer?: mongoose.Types.ObjectId | null;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    _id: mongoose.Types.ObjectId;
-} & {
-    __v: number;
-}>;
+}, any, ICourse>;
 //# sourceMappingURL=Course.d.ts.map
