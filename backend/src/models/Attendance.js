@@ -35,6 +35,16 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Attendance = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const attendanceSchema = new mongoose_1.Schema({ course: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Course', required: true }, date: { type: Date, default: Date.now }, records: [{ student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' }, status: { type: String, enum: ['Present', 'Absent', 'Late'] } }] }, { timestamps: true });
+const attendanceRecordSchema = new mongoose_1.Schema({
+    student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
+    status: { type: String, enum: ['Present', 'Absent', 'Late'], required: true }
+}, { _id: false });
+const attendanceSchema = new mongoose_1.Schema({
+    course: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Course', required: true },
+    date: { type: Date, required: true },
+    records: [attendanceRecordSchema]
+}, { timestamps: true });
+// Prevent multiple attendance sheets for the same course on the same date
+attendanceSchema.index({ course: 1, date: 1 }, { unique: true });
 exports.Attendance = mongoose_1.default.model('Attendance', attendanceSchema);
 //# sourceMappingURL=Attendance.js.map

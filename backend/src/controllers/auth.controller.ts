@@ -7,8 +7,16 @@ import { emailService } from '../services/email.service';
 
 const generateTokens = (userId: string, role: string) => {
   const payload = { id: userId, role };
-  const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '15m' });
-  const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, { expiresIn: '7d' });
+  const accessSecret = process.env.JWT_SECRET;
+  // Fallback to access secret if refresh secret not provided (useful for local dev)
+  const refreshSecret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
+
+  if (!accessSecret || !refreshSecret) {
+    throw new Error('Missing JWT_SECRET and/or JWT_REFRESH_SECRET environment variables');
+  }
+
+  const accessToken = jwt.sign(payload, accessSecret as string, { expiresIn: '15m' });
+  const refreshToken = jwt.sign(payload, refreshSecret as string, { expiresIn: '7d' });
   return { accessToken, refreshToken };
 };
 
