@@ -30,7 +30,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         console.log('Socket connected');
       });
 
-      newSocket.on('notification:new', (notification) => {
+      newSocket.on('notification:new', () => {
         setUnreadNotifications((prev) => prev + 1);
       });
 

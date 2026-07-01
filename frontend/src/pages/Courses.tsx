@@ -10,6 +10,7 @@ import { EditModal } from '../components/EditModal';
 import { DeleteConfirm } from '../components/DeleteConfirm';
 import { toast } from 'sonner';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 interface Course {
   _id: string;
@@ -27,6 +28,7 @@ interface Department {
 }
 
 export const Courses = () => {
+  const { user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +36,16 @@ export const Courses = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
-  const [formData, setFormData] = useState({ name: '', code: '', credits: 3, department: '', description: '', capacity: 50 });
+  const [formData, setFormData] = useState<{
+    _id?: string;
+    name: string;
+    code: string;
+    credits: number;
+    department: string;
+    description: string;
+    capacity: number;
+  }>({ name: '', code: '', credits: 3, department: '', description: '', capacity: 50 });
+  const isStudent = user?.role === 'Student';
 
   const fetchData = async () => {
     try {
@@ -117,8 +128,12 @@ export const Courses = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
+          {isStudent && <p className="text-sm text-gray-500 mt-1">You can view course information, but only admins can manage courses.</p>}
+        </div>
+        {!isStudent && (
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button className="bg-blue-600 hover:bg-blue-700">Add Course</Button>
           </DialogTrigger>
@@ -165,7 +180,8 @@ export const Courses = () => {
               </Button>
             </form>
           </DialogContent>
-        </Dialog>
+          </Dialog>
+        )}
       </div>
 
       <div className="bg-white rounded-lg shadow border border-gray-200 overflow-x-auto">
@@ -194,24 +210,28 @@ export const Courses = () => {
                   <TableCell>{course.capacity || 'N/A'}</TableCell>
                   <TableCell>{course.department?.name || 'N/A'}</TableCell>
                   <TableCell className="text-center space-x-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleEdit(course)}
-                      className="inline-flex items-center gap-1"
-                    >
-                      <Pencil className="w-4 h-4" />
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleDelete(course)}
-                      className="inline-flex items-center gap-1 text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Delete
-                    </Button>
+                    {!isStudent && (
+                      <>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(course)}
+                          className="inline-flex items-center gap-1"
+                        >
+                          <Pencil className="w-4 h-4" />
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDelete(course)}
+                          className="inline-flex items-center gap-1 text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Delete
+                        </Button>
+                      </>
+                    )}
                   </TableCell>
                 </TableRow>
               ))

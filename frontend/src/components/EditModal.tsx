@@ -46,7 +46,7 @@ export const EditModal: React.FC<EditModalProps> = ({
   }, [initialData, fields, isOpen]);
 
   const handleChange = (fieldName: string, value: any) => {
-    setFormData(prev => ({ ...prev, [fieldName]: value }));
+    setFormData((prev: Record<string, any>) => ({ ...prev, [fieldName]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

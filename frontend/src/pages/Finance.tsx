@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import { useQuery } from '../hooks/useApi';
 import { api } from '../api';
-import { useAuth } from '../context/AuthContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 import { toast } from 'sonner';
 import { DollarSign, CreditCard, CheckCircle } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 // Setup Stripe Promise (in a real app, use the actual pub key from env)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_placeholder');
 
-const CheckoutForm = ({ clientSecret, invoiceId, onSuccess }: { clientSecret: string, invoiceId: string, onSuccess: () => void }) => {
+const CheckoutForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -52,9 +51,7 @@ const CheckoutForm = ({ clientSecret, invoiceId, onSuccess }: { clientSecret: st
 };
 
 export const Finance = () => {
-  const { user } = useAuth();
   const [paymentSecret, setPaymentSecret] = useState<string | null>(null);
-  const [activeInvoice, setActiveInvoice] = useState<string | null>(null);
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   
   const { data, refetch, loading } = useQuery<{ data: any[] }>('finance', '/finance');
@@ -65,7 +62,6 @@ export const Finance = () => {
     try {
       const res = await api.post(`/finance/${invoiceId}/payment-intent`);
       setPaymentSecret(res.data.clientSecret);
-      setActiveInvoice(invoiceId);
       setIsPayModalOpen(true);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to initialize payment');
@@ -163,7 +159,7 @@ export const Finance = () => {
           <div className="mt-4">
             {paymentSecret && (
               <Elements stripe={stripePromise} options={{ clientSecret: paymentSecret }}>
-                <CheckoutForm clientSecret={paymentSecret} invoiceId={activeInvoice!} onSuccess={onPaymentSuccess} />
+                <CheckoutForm onSuccess={onPaymentSuccess} />
               </Elements>
             )}
           </div>

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { ZodSchema } from 'zod';
+import type { ZodSchema } from 'zod';
 import { useFormState } from './useApi';
 
 interface UseZodFormOptions<T> {
